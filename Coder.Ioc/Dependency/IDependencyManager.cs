@@ -38,5 +38,12 @@ namespace Coder.Ioc.Dependency
         /// </summary>
         /// <param name="type"></param>
         object Resolve(Type type);
+
+        /// <summary>
+        /// 获取服务类获取所有的可实现类
+        /// </summary>
+        /// <param name="serviceType"></param>
+        /// <returns></returns>
+        List<Type> GetResolveTypes(Type serviceType);
     }
 }

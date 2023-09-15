@@ -2,6 +2,8 @@
 using Coder.Ioc.Dependency;
 using Coder.Ioc.ServiceCollection;
 using Coder.Script;
+using Coder.Script.Actuators.CommandStatements;
+using Coder.Serivces.Dependency;
 using GithubCoder;
 using Suyaa.Arguments;
 
@@ -77,6 +79,7 @@ dm.RegisterAll();
 // 注册参数
 dm.Register(typeof(EArguments), eargs);
 
+
 // 获取所有脚本文件
 var scriptFiles = IOHelper.GetScriptFiles(unzipFolder);
 foreach (var scriptFile in scriptFiles)
@@ -91,6 +94,7 @@ foreach (var scriptFile in scriptFiles)
     string content = sy.IO.ReadUtf8FileContent(scriptFile);
     // 加载脚本
     var engine = new Engine(dm, content);
+    var types = dm.GetResolveTypes<ICommandStatementActuator>();
     // 输出中间脚本
     engine.Output(scriptOutputPath + ".s");
     // 执行脚本

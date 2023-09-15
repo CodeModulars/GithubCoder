@@ -70,6 +70,24 @@ namespace Coder.Ioc.ServiceCollection
         }
 
         /// <summary>
+        /// 获取服务类获取所有的可实现类
+        /// </summary>
+        /// <param name="serviceType"></param>
+        /// <returns></returns>
+        public List<Type> GetResolveTypes(Type serviceType)
+        {
+            List<Type> list = new List<Type>();
+            var types = _services.Where(d => d.ServiceType == serviceType).Select(d => d.ImplementationType).ToList();
+            if (types is null) return list;
+            foreach (var type in types)
+            {
+                if (type is null) continue;
+                list.Add(type);
+            }
+            return list;
+        }
+
+        /// <summary>
         /// 抽取
         /// </summary>
         /// <param name="type"></param>

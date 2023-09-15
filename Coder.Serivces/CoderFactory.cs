@@ -38,6 +38,7 @@ namespace Coder.Serivces
                     Type[] types = assembly.GetTypes();
                     foreach (Type type in types)
                     {
+                        if (type.IsAbstract) continue;
                         // 判断是否实现 ICoderService 接口
                         if (type.HasInterface<ICoderService>())
                         {

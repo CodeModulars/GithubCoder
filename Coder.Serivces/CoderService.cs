@@ -7,7 +7,7 @@ namespace Coder.Serivces
     /// <summary>
     /// 代码生成服务
     /// </summary>
-    public class CoderService : ICoderService, IDependencyTransient
+    public abstract class CoderService : ICoderService, IDependencyTransient
     {
 
     }

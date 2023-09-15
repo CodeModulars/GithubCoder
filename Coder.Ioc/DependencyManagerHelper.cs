@@ -178,6 +178,8 @@ namespace Coder.Ioc
                 {
                     // 跳过所有的接口
                     if (type.IsInterface) continue;
+                    // 条码抽象类
+                    if (type.IsAbstract) continue;
                     // 自动判断并注册类型
                     manager.RegisterAllInterfaces(type);
                 }
@@ -207,6 +209,16 @@ namespace Coder.Ioc
         public static T Resolve<T>(this IDependencyManager manager)
         {
             return (T)manager.Resolve(typeof(T));
+        }
+
+        /// <summary>
+        /// 获取服务类获取所有的可实现类
+        /// </summary>
+        /// <param name="serviceType"></param>
+        /// <returns></returns>
+        public static List<Type> GetResolveTypes<T>(this IDependencyManager manager)
+        {
+            return manager.GetResolveTypes(typeof(T));
         }
     }
 }
