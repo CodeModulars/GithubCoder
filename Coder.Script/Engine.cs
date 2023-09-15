@@ -22,6 +22,7 @@ namespace Coder.Script
      * $(key) 获取变量
      * $@ 强制@符号
      * $$ 强制$符号
+     * $# 强制#符号
      */
 
     /// <summary>

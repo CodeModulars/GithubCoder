@@ -5,12 +5,20 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Version>0.1.2309.1</Version>
+    <AssemblyName>coder</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Coder.Ioc.ServiceCollection\Coder.Ioc.ServiceCollection.csproj" />
     <ProjectReference Include="..\Coder.Script\Coder.Script.csproj" />
     <ProjectReference Include="..\Plugs\Coder.Plugs.Basic\Coder.Plugs.Basic.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="run.cmd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
