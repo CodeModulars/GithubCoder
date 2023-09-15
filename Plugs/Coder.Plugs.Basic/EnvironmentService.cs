@@ -14,9 +14,14 @@ namespace Coder.Plugs.Basic
     /// </summary>
     public sealed class EnvironmentService : CoderService
     {
+        private readonly EArguments _arguments;
 
-        // 系统变量
-        public static EArguments? arguments;
+        public EnvironmentService(
+            EArguments arguments
+            )
+        {
+            _arguments = arguments;
+        }
 
         /// <summary>
         /// 获取运行参数
@@ -25,9 +30,8 @@ namespace Coder.Plugs.Basic
         [CoderAction(ActionNameTransformType.LowerUnderlineCase)]
         public string GetArgument(string name)
         {
-            if (arguments is null) return string.Empty;
-            if (!arguments.ContainsKey(name)) return string.Empty;
-            return arguments[name];
+            if (!_arguments.ContainsKey(name)) return string.Empty;
+            return _arguments[name];
         }
     }
 }

@@ -2,7 +2,7 @@
   "profiles": {
     "GithubCoder": {
       "commandName": "Project",
-      "commandLineArgs": "--org:\"CodeModulars\" --repo:\"Hace.Net\" --branch:\"main\""
+      "commandLineArgs": "--org:\"CodeModulars\" --repo:\"Hace.Net\" --branch:\"main\" --target:\"D:\\Temp\\project\" --project:\"test\""
     }
   }
 }

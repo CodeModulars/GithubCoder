@@ -3,6 +3,7 @@ using Coder.Ioc.Dependency;
 using Coder.Script.ScriptNodes;
 using Coder.Script.ScriptStatements;
 using Coder.Serivces;
+using Suyaa.Arguments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace Coder.Script.Actuators.CommandStatements
     {
         private readonly IAsyncDataProvider _asyncDataProvider;
         private readonly CoderFactory _coderFactory;
+        private readonly EArguments _arguments;
         private readonly IDependencyManager _dependencyManager;
         private readonly CommandStatement _statement;
         private readonly FieldCollection _fields;
@@ -29,11 +31,13 @@ namespace Coder.Script.Actuators.CommandStatements
         public CommandStatementActuator(
             IAsyncDataProvider asyncDataProvider,
             CoderFactory coderFactory,
+            EArguments arguments,
             IDependencyManager dependencyManager
             )
         {
             _asyncDataProvider = asyncDataProvider;
             _coderFactory = coderFactory;
+            _arguments = arguments;
             _dependencyManager = dependencyManager;
             _statement = (CommandStatement)(_asyncDataProvider.GetValue<IScriptStatement>() ?? throw new ExecuteException($"未找到脚本语句"));
             _fields = _asyncDataProvider.GetValue<FieldCollection>() ?? throw new ExecuteException($"未找到字段集合");
@@ -45,8 +49,9 @@ namespace Coder.Script.Actuators.CommandStatements
         {
             if (_statement.Nodes.Count < 2) throw new ExecuteException(_statement);
             if (!(_statement.Nodes[1] is StringNode stringNode)) throw new ExecuteException(_statement);
+            string target = _arguments["target"];
             string path = _statement.Nodes[1].Render(_fields);
-            _actuator.RenderPath = path;
+            _actuator.RenderPath = sy.IO.CombinePath(target, path);
             await Task.CompletedTask;
         }
 
