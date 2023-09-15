@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "GithubCoder": {
+      "commandName": "Project",
+      "commandLineArgs": "--org:\"CodeModulars\" --repo:\"Hace.Net\" --branch:\"main\""
+    }
+  }
+}

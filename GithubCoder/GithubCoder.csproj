@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Coder.Ioc.ServiceCollection\Coder.Ioc.ServiceCollection.csproj" />
+    <ProjectReference Include="..\Coder.Script\Coder.Script.csproj" />
+    <ProjectReference Include="..\Plugs\Coder.Plugs.Basic\Coder.Plugs.Basic.csproj" />
+  </ItemGroup>
+
+</Project>
