@@ -1,5 +1,6 @@
 ﻿using Coder.Script.ScriptNodes;
 using Coder.Script.ScriptStatements;
+using Suyaa;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -72,17 +73,19 @@ namespace Coder.Script
                     case '\r': break;
                     // 处理换行
                     case '\n': ProcessWrap(chr); break;
-                    // 处理"
+                    // 处理 "
                     case '"': ProcessDoubleQuotation(chr); break;
-                    // 处理#
+                    // 处理 #
                     case '#': ProcessPound(chr); break;
-                    // 处理$
+                    // 处理 $
                     case '$': ProcessDoller(chr); break;
-                    // 处理@
+                    // 处理 @
                     case '@': ProcessAt(chr); break;
-                    // 处理(
+                    // 处理 (
                     case '(': ProcessLeftBracket(chr); break;
-                    // 处理)
+                    // 处理 ,
+                    case ',': ProcessComma(chr); break;
+                    // 处理 )
                     case ')': ProcessRightBracket(chr); break;
                     // 默认处理
                     default: ProcessDefault(chr); break;
@@ -214,6 +217,61 @@ namespace Coder.Script
             }
         }
 
+        // 处理 ,
+        private void ProcessComma(char chr)
+        {
+            // 普通文本
+            if (IsNoneContent())
+            {
+                _statement = new TextStatement();
+                _statements.Add(_statement);
+                _spaceCount = 0;
+            }
+
+            if (_statement is CommandStatement)
+            {
+                if (_statement.Nodes.Count < 3) throw new ParseException(_line, _site, chr);
+                if (_isVariable) throw new ParseException(_line, _site, chr);
+                // 获取第一个节点
+                if (!(_statement.Nodes[0] is NameNode nameNode)) throw new ParseException(_line, _site, chr);
+                // 不在call命令中
+                if (nameNode.Name != "call") throw new ParseException(_line, _site, chr);
+                // 内容为空
+                if (_builder.Length <= 0) throw new ParseException(_line, _site, chr);
+                // 处理参数
+                ProcessCallParam(_statement, chr);
+                return;
+            }
+
+            // 正常则添加字符
+            _builder.Append(chr);
+        }
+
+        // 处理call参数
+        private void ProcessCallParam(IScriptStatement statement, char chr)
+        {
+            if (_builder[0] == '$')
+            {
+                _lastNode = new FieldNode(_builder.ToString(1, _builder.Length - 1));
+                statement.Nodes.Add(_lastNode);
+                _builder.Clear();
+            }
+            else
+            {
+                var value = _builder.ToString();
+                if (value.IsDouble())
+                {
+                    _lastNode = new NumberNode(value.ToDouble());
+                    statement.Nodes.Add(_lastNode);
+                    _builder.Clear();
+                }
+                else
+                {
+                    throw new ParseException(_line, _site, chr);
+                }
+            }
+        }
+
         // 处理命令行 )
         private void ProcessCommandRightBracket(IScriptStatement statement, char chr)
         {
@@ -235,11 +293,7 @@ namespace Coder.Script
                     }
                     if (_builder.Length > 0)
                     {
-                        if (!_isDollar) throw new ParseException(_line, _site, chr);
-                        _lastNode = new FieldNode(_builder.ToString());
-                        statement.Nodes.Add(_lastNode);
-                        _isDollar = false;
-                        _builder.Clear();
+                        ProcessCallParam(statement, chr);
                     }
                     _lastNode = null;
                     break;
@@ -333,9 +387,14 @@ namespace Coder.Script
             //}
             else
             {
-                // 普通节点
-                _lastNode = new TextNode(_builder.ToString());
-                statement.Nodes.Add(_lastNode);
+                var value = _builder.ToString();
+                if (value.IsDouble())
+                {
+                    // 普通节点
+                    _lastNode = new NumberNode(value.ToDouble());
+                    statement.Nodes.Add(_lastNode);
+                }
+                throw new ParseException(_line, _site, chr);
             }
             _builder.Clear();
         }
@@ -414,8 +473,13 @@ namespace Coder.Script
         // 处理双引号 "
         private void ProcessDoubleQuotation(char chr)
         {
-            // 当前无内容，则报错
-            if (IsNoneContent()) throw new ParseException(_line, _site, chr);
+            // 当前无内容，则添加为文本语句
+            if (IsNoneContent())
+            {
+                _statement = new TextStatement();
+                _statements.Add(_statement);
+                _spaceCount = 0;
+            }
 
             // 判断是否空语句
             if (_statement is null) throw new ParseException(_line, _site, chr);

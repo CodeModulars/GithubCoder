@@ -15,9 +15,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coder.Plugs.Hace", "Plugs\C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coder.Plugs.Basic", "Plugs\Coder.Plugs.Basic\Coder.Plugs.Basic.csproj", "{C10B21F8-6613-4BB7-A26A-9B10DDB0D92F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coder.Ioc", "Coder.Ioc\Coder.Ioc.csproj", "{82CE0C5C-63B9-4AEF-8E47-7C879917EF24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coder.Ioc", "Coder.Ioc\Coder.Ioc.csproj", "{82CE0C5C-63B9-4AEF-8E47-7C879917EF24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coder.Ioc.ServiceCollection", "Coder.Ioc.ServiceCollection\Coder.Ioc.ServiceCollection.csproj", "{7BA54F79-133D-4211-B761-63695B73A158}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coder.Ioc.ServiceCollection", "Coder.Ioc.ServiceCollection\Coder.Ioc.ServiceCollection.csproj", "{7BA54F79-133D-4211-B761-63695B73A158}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{D1440438-4C9A-44AF-A47F-8EAFB4748AB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlugParser", "Tools\PlugParser\PlugParser.csproj", "{E3E79731-4D55-4307-9E44-F640F11F8D32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +57,10 @@ Global
 		{7BA54F79-133D-4211-B761-63695B73A158}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7BA54F79-133D-4211-B761-63695B73A158}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7BA54F79-133D-4211-B761-63695B73A158}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3E79731-4D55-4307-9E44-F640F11F8D32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3E79731-4D55-4307-9E44-F640F11F8D32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3E79731-4D55-4307-9E44-F640F11F8D32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3E79731-4D55-4307-9E44-F640F11F8D32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +68,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{977BDCB1-8FAA-41FC-870F-AF9065A874DF} = {90F5F302-3891-4EE0-90C2-4178DD827791}
 		{C10B21F8-6613-4BB7-A26A-9B10DDB0D92F} = {90F5F302-3891-4EE0-90C2-4178DD827791}
+		{E3E79731-4D55-4307-9E44-F640F11F8D32} = {D1440438-4C9A-44AF-A47F-8EAFB4748AB2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E0619897-2E27-45F6-9643-A33F3A94B3BC}

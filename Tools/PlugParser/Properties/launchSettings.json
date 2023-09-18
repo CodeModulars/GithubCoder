@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "PlugParser": {
+      "commandName": "Project",
+      "commandLineArgs": "\"D:\\Project.Github\\CodeModulars\\GithubCoder\\GithubCoder\\bin\\Release\\net7.0\\Coder.Plugs.Basic.dll\""
+    }
+  }
+}

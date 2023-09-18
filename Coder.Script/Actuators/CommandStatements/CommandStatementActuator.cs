@@ -7,8 +7,10 @@ using Suyaa.Arguments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Coder.Script.Actuators.CommandStatements
 {
@@ -62,6 +64,7 @@ namespace Coder.Script.Actuators.CommandStatements
             {
                 StringNode stringNode => stringNode.Render(_fields),
                 FieldNode fieldNode => _fields.GetValueRequired(fieldNode.Name),
+                NumberNode numberNode => numberNode.Value,
                 _ => throw new ExecuteException(_statement),
             };
         }
@@ -81,7 +84,7 @@ namespace Coder.Script.Actuators.CommandStatements
                 types.Add(obj.GetType());
             }
             var action = _coderFactory.GetAction(functionNameNode.Name, types);
-            if (action is null) throw new ExecuteException(_statement);
+            if (action is null) throw new ExecuteException(_statement, $"缺少'{functionNameNode.Name}(args[{types.Count}])'对应的注册函数");
             var service = _dependencyManager.Resolve(action.CoderService);
             if (action.ReturnType.FullName == "System.Void")
             {
@@ -101,6 +104,16 @@ namespace Coder.Script.Actuators.CommandStatements
             await Task.CompletedTask;
         }
 
+        // 设置呈现地址
+        private async Task RenderSet()
+        {
+            if (_statement.Nodes.Count != 3) throw new ExecuteException(_statement);
+            if (!(_statement.Nodes[1] is FieldNode fieldNode)) throw new ExecuteException(_statement);
+            var value = GetNodeValue(_statement.Nodes[2]);
+            _fields.SetValue(fieldNode.Name, value);
+            await Task.CompletedTask;
+        }
+
         /// <summary>
         /// 呈现
         /// </summary>
@@ -112,6 +125,9 @@ namespace Coder.Script.Actuators.CommandStatements
             switch (nameNode.Name)
             {
                 case "use": return string.Empty;
+                case "set":
+                    await RenderSet();
+                    return string.Empty;
                 case "render":
                     await SetRenderPath();
                     return string.Empty;

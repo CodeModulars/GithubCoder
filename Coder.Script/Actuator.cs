@@ -65,6 +65,9 @@ namespace Coder.Script
                 }
                 // 判断输出地址
                 if (this.RenderPath.IsNullOrWhiteSpace()) throw new Exception($"缺少输出地址");
+                // 获取目录并创建
+                var folder = sy.IO.GetFolderPath(this.RenderPath);
+                sy.IO.CreateFolder(folder);
                 // 输出内容
                 sy.IO.WriteUtf8FileContent(this.RenderPath, sb.ToString());
             }

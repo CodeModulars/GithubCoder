@@ -6,19 +6,19 @@ using System.ComponentModel;
 namespace Coder.Plugs.Basic
 {
     /// <summary>
-    /// Guid服务
+    /// 目录服务
     /// </summary>
-    public sealed class GuidService : CoderService
+    public sealed class FolderService : CoderService
     {
         /// <summary>
-        /// 创建Guid
+        /// 目录创建
         /// </summary>
         /// <returns></returns>
         [CoderAction(ActionNameTransformType.LowerUnderlineCase)]
-        [Description("创建Guid")]
-        public string CreateGuid()
+        [Description("目录创建")]
+        public void FolderCreate(string path)
         {
-            return Guid.NewGuid().ToString();
+            sy.IO.CreateFolder(path);
         }
     }
 }

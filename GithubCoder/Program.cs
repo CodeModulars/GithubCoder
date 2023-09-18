@@ -7,6 +7,8 @@ using Coder.Serivces.Dependency;
 using GithubCoder;
 using Suyaa.Arguments;
 
+Console.Title = sy.Assembly.FullName;
+
 // 获取参数 
 var eargs = new EArguments(args);
 // 插件初始化

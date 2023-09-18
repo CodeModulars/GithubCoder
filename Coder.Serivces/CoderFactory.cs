@@ -2,6 +2,7 @@
 using Coder.Ioc.Dependency;
 using Coder.Serivces.Attributes;
 using Coder.Serivces.Dependency;
+using Coder.Serivces.Helpers;
 using Suyaa;
 using System;
 using System.Collections.Generic;
@@ -80,107 +81,11 @@ namespace Coder.Serivces
             return null;
         }
 
-        // 获取驼峰名称
-        private string GetCamelCase(string name)
-        {
-            if (name.IsNullOrWhiteSpace()) return name;
-            if (name.Length > 1)
-            {
-                return name[0].ToString().ToLower() + name.Substring(1);
-            }
-            return name.ToLower();
-        }
-
-        // 获取帕斯卡名称
-        private string GetPascalCase(string name)
-        {
-            if (name.IsNullOrWhiteSpace()) return name;
-            if (name.Length > 1)
-            {
-                return name[0].ToString().ToUpper() + name.Substring(1);
-            }
-            return name.ToUpper();
-        }
-
-        // 获取小写下划线名称
-        private string GetLowerUnderlineCase(string name)
-        {
-            if (name.IsNullOrWhiteSpace()) return name;
-            if (name.Length > 1)
-            {
-                StringBuilder sb = new StringBuilder();
-                sb.Append(name[0].ToString().ToLower());
-                for (int i = 1; i < name.Length; i++)
-                {
-                    if (name[i] >= 'A' && name[i] <= 'Z')
-                    {
-                        sb.Append('_');
-                        sb.Append(name[i].ToString().ToLower());
-                    }
-                    else
-                    {
-                        sb.Append(name[i]);
-                    }
-                }
-                return sb.ToString();
-            }
-            return name.ToLower();
-        }
-
-        // 获取小写下划线名称
-        private string GetUpperUnderlineCase(string name)
-        {
-            if (name.IsNullOrWhiteSpace()) return name;
-            if (name.Length > 1)
-            {
-                StringBuilder sb = new StringBuilder();
-                sb.Append(name[0].ToString().ToLower());
-                for (int i = 1; i < name.Length; i++)
-                {
-                    if (name[i] >= 'A' && name[i] <= 'Z')
-                    {
-                        sb.Append('_');
-                        sb.Append(name[i]);
-                    }
-                    else
-                    {
-                        sb.Append(name[i].ToString().ToUpper());
-                    }
-                }
-                return sb.ToString();
-            }
-            return name.ToUpper();
-        }
-
-        // 获取所有行为
-        private List<CoderActionDescriptor> GetActions(Type type)
-        {
-            List<CoderActionDescriptor> actions = new List<CoderActionDescriptor>();
-            // 获取所有接口
-            var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Instance);
-            foreach (var method in methods)
-            {
-                var attr = method.GetCustomAttribute<CoderActionAttribute>();
-                if (attr is null) continue;
-                var name = attr.TransformType switch
-                {
-                    ActionNameTransformType.Custom => attr.Name,
-                    ActionNameTransformType.PascalCase => GetPascalCase(method.Name),
-                    ActionNameTransformType.CamelCase => GetCamelCase(method.Name),
-                    ActionNameTransformType.LowerUnderlineCase => GetLowerUnderlineCase(method.Name),
-                    ActionNameTransformType.UpperUnderlineCase => GetUpperUnderlineCase(method.Name),
-                    _ => method.Name,
-                };
-                actions.Add(new CoderActionDescriptor(type, name, method));
-            }
-            return actions;
-        }
-
         // 获取所有行为
         private List<CoderActionDescriptor> GetActions(IList<Type> types)
         {
             List<CoderActionDescriptor> actions = new List<CoderActionDescriptor>();
-            foreach (var type in types) actions.AddRange(GetActions(type));
+            foreach (var type in types) actions.AddRange(type.GetActions());
             return actions;
         }
 
