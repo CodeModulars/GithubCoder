@@ -88,7 +88,7 @@ namespace GithubCoder
 
                                 foreach (var zipArchiveEntry in toDelArchives)
                                     zipArchiveEntry.Delete();
-                                archive.CreateEntryFromFile(sourceDirectoryName, toZipedFileName, compressionLevel);
+                                archive.CreateEntryFromFile(sourceDirectoryName, toZipedFileName ?? "", compressionLevel);
                             }
                         }
                     }
