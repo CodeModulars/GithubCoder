@@ -43,15 +43,5 @@ namespace Coder.Plugs.Basic
             return str.Split(chr).ToList();
         }
 
-        /// <summary>
-        /// 字符串数组获取
-        /// </summary>
-        /// <returns></returns>
-        [CoderAction(ActionNameTransformType.LowerUnderlineCase)]
-        [Description("字符串数组获取")]
-        public string StringListGet(List<string> list, double index)
-        {
-            return list[(int)index];
-        }
     }
 }
