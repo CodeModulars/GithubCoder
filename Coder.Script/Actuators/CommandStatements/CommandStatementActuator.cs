@@ -134,6 +134,8 @@ namespace Coder.Script.Actuators.CommandStatements
                 case "call":
                     await RenderCall();
                     return string.Empty;
+                case "line":
+                    return "\n";
                 default: throw new ExecuteException(_statement);
             }
         }

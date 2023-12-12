@@ -11,7 +11,8 @@ namespace Coder.Script
      * 脚本规范
      * 以行为单位进行脚本处理
      * # 注释行 - 不进行任何处理
-     * @render path 设置
+     * @line 输出空行
+     * @render path 设置数据路径
      * @set $key value 设置变量
      * @use name 使用插件
      * @call $key name(args) 执行函数调用
