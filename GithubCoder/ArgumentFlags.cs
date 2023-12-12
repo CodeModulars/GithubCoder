@@ -35,5 +35,10 @@ namespace GithubCoder
         /// 项目名称
         /// </summary>
         public const string Project = "project";
+
+        /// <summary>
+        /// 帮助
+        /// </summary>
+        public const string Help = "help";
     }
 }

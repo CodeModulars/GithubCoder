@@ -27,6 +27,11 @@ namespace Coder.Serivces
         private List<CoderActionDescriptor>? _actions;
         private readonly IDependencyManager _dependencyManager;
 
+        /// <summary>
+        /// 行为集合
+        /// </summary>
+        public IEnumerable<CoderActionDescriptor> Actions => _actions ?? new List<CoderActionDescriptor>();
+
         // 获取程序所有的
         private List<Type> GetCoderServics()
         {

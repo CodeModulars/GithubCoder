@@ -21,6 +21,11 @@ namespace Coder.Serivces
         public string Name { get; }
 
         /// <summary>
+        /// 描述
+        /// </summary>
+        public string Description { get; }
+
+        /// <summary>
         /// 函数信息
         /// </summary>
         public MethodInfo Method { get; }
@@ -46,10 +51,11 @@ namespace Coder.Serivces
         /// <param name="coderService"></param>
         /// <param name="name"></param>
         /// <param name="method"></param>
-        public CoderActionDescriptor(Type coderService, string name, MethodInfo method)
+        public CoderActionDescriptor(Type coderService, string name, string description, MethodInfo method)
         {
             CoderService = coderService;
             Name = name;
+            Description = description;
             Method = method;
             ReturnType = method.ReturnType;
             // 加载所有参数

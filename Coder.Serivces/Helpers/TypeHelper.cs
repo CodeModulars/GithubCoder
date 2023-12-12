@@ -2,6 +2,7 @@
 using Suyaa;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Reflection;
 using System.Text;
 
@@ -107,7 +108,10 @@ namespace Coder.Serivces.Helpers
                     ActionNameTransformType.UpperUnderlineCase => GetUpperUnderlineCase(method.Name),
                     _ => method.Name,
                 };
-                actions.Add(new CoderActionDescriptor(type, name, method));
+                string description = string.Empty;
+                var descriptionAttribute = method.GetCustomAttribute<DescriptionAttribute>();
+                if (descriptionAttribute != null) description = descriptionAttribute.Description;
+                actions.Add(new CoderActionDescriptor(type, name, description, method));
             }
             return actions;
         }

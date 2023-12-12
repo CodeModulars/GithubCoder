@@ -26,7 +26,7 @@ namespace Coder.Plugs.Basic
         /// </summary>
         /// <returns></returns>
         [CoderAction(ActionNameTransformType.LowerUnderlineCase)]
-        [Description("计算算术和")]
+        [Description("计算算术差")]
         public double Sub(double num1, double num2)
         {
             return num1 - num2;
@@ -48,7 +48,7 @@ namespace Coder.Plugs.Basic
         /// </summary>
         /// <returns></returns>
         [CoderAction(ActionNameTransformType.LowerUnderlineCase)]
-        [Description("计算算术积")]
+        [Description("计算算术商")]
         public double Div(double num1, double num2)
         {
             return num1 / num2;
@@ -59,7 +59,7 @@ namespace Coder.Plugs.Basic
         /// </summary>
         /// <returns></returns>
         [CoderAction(ActionNameTransformType.LowerUnderlineCase)]
-        [Description("计算整除")]
+        [Description("整除")]
         public double Divi(double num1, double num2)
         {
             return (long)num1 / (long)num2;
@@ -70,7 +70,7 @@ namespace Coder.Plugs.Basic
         /// </summary>
         /// <returns></returns>
         [CoderAction(ActionNameTransformType.LowerUnderlineCase)]
-        [Description("计算取余")]
+        [Description("取余")]
         public double Mod(double num1, double num2)
         {
             return (long)num1 % (long)num2;

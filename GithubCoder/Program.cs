@@ -3,14 +3,44 @@ using Coder.Ioc.Dependency;
 using Coder.Ioc.ServiceCollection;
 using Coder.Script;
 using Coder.Script.Actuators.CommandStatements;
+using Coder.Serivces;
 using Coder.Serivces.Dependency;
 using GithubCoder;
 using Suyaa.Arguments;
+using System.Text;
 
 Console.Title = sy.Assembly.FullName;
 
 // 获取参数 
 var eargs = new EArguments(args);
+// 帮助
+if (eargs.ContainsKey(ArgumentFlags.Help) || !eargs.Any())
+{
+    // 创建容器
+    IDependencyManager dependencyManager = new DependencyManager();
+    dependencyManager.RegisterAll();
+    CoderFactory coderFactory = new CoderFactory(dependencyManager);
+    foreach (var action in coderFactory.Actions)
+    {
+        StringBuilder sb = new StringBuilder();
+        StringBuilder sbParams = new StringBuilder();
+        sb.Append(action.ReturnType.Name);
+        sb.Append(' ');
+        sb.Append(action.Name);
+        sb.Append('(');
+        foreach (var pro in action.Params)
+        {
+            if (sbParams.Length > 0) sbParams.Append(", ");
+            sbParams.Append(pro.Name);
+        }
+        sb.Append(sbParams);
+        sb.Append(')');
+        sb.Append(" - ");
+        sb.Append(action.Description);
+        Console.WriteLine(sb);
+    }
+    return;
+}
 // 插件初始化
 //Coder.Plugs.Basic.EnvironmentService.arguments = eargs;
 // 校验必要参数
